@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.arthurvalle.tomjet.service.RegisterService;
@@ -17,6 +18,7 @@ import com.arthurvalle.tomjet.service.RegisterService;
 public class RegisterActivity extends AppCompatActivity {
     EditText edtRegisterName, edtRegisterLogin, edtRegisterEmail, edtRegisterPassword, edtRegisterPasswordConfirm;
     Button btnRegister;
+    ProgressBar registerSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +29,14 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                registerSpinner.setVisibility(View.VISIBLE);
+
                 String[] params = {edtRegisterEmail.getText().toString(), edtRegisterLogin.getText().toString(), edtRegisterName.getText().toString(), edtRegisterPassword.getText().toString()};
 
                 RegisterService.TaskListener listener = new RegisterService.TaskListener() {
                     @Override
                     public void onFinished(String result) {
+                        registerSpinner.setVisibility(View.INVISIBLE);
                         Log.d("result: ", result);
                         Toast.makeText(getApplicationContext(),"Usuário Registrado!",
                                 Toast.LENGTH_LONG).show();
@@ -53,5 +58,6 @@ public class RegisterActivity extends AppCompatActivity {
         edtRegisterPassword = findViewById(R.id.edtRegisterPassword);
         edtRegisterPasswordConfirm = findViewById(R.id.edtRegisterPasswordConfirm);
         btnRegister = findViewById(R.id.btnRegister);
+        registerSpinner = findViewById(R.id.registerSpinner);
     }
 }

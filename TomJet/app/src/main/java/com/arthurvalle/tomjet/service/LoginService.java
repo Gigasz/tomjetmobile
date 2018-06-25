@@ -16,6 +16,31 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public class LoginService extends AsyncTask<String,Void,String> {
+
+
+    public interface TaskListener {
+        public void onFinished(String result);
+    }
+
+    private final LoginService.TaskListener taskListener;
+
+    public LoginService(LoginService.TaskListener listener) {
+        // The listener reference is passed in through the constructor
+        this.taskListener = listener;
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
+
+        // In onPostExecute we check if the listener is valid
+        if (this.taskListener != null) {
+            // And if it is we call the callback function on it.
+            this.taskListener.onFinished(result);
+        }
+    }
+
+
     @Override
     protected String doInBackground(String... params) {
         String login = params[0];
@@ -62,7 +87,6 @@ public class LoginService extends AsyncTask<String,Void,String> {
                 }
 
                 finalJson = buffer.toString();
-//                Log.e("sucesso", "sucessinho");
             } else {
                 finalJson = urlConnection.getResponseCode()+"";
             }
