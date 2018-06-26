@@ -20,6 +20,11 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".FlightsListActivity" />
+        <activity android:name=".FlightDetailsActivity" />
+        <activity android:name=".PaymentActivity" />
+        <activity android:name=".SeatSelectActivity" />
+        <activity android:name=".ApprovedPaymentActivity" />
+        <activity android:name=".PassagesActivity"></activity>
     </application>
 
 </manifest>

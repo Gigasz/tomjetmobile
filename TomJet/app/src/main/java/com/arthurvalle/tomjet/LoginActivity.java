@@ -8,8 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.arthurvalle.tomjet.service.FlightListService;
 import com.arthurvalle.tomjet.service.LoginService;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
     Button btnRedirectToRegister, btnLogin;
@@ -38,14 +44,38 @@ public class LoginActivity extends AppCompatActivity {
 
                 String[] params = {edtUser.getText().toString(), edtPassword.getText().toString()};
 
+                //loging in
                 LoginService.TaskListener listener = new LoginService.TaskListener() {
                     @Override
                     public void onFinished(String result) {
                         Log.e("result", result);
                         loginSpinner.setVisibility(View.INVISIBLE);
-                        Intent i = new Intent(getApplicationContext(), FlightsListActivity.class);
-                        i.putExtra("result", result);
-                        startActivity(i);
+
+                        //checking if the user is authenticated
+                        if (!result.equals("404")){
+                            Intent i = new Intent(getApplicationContext(), FlightsListActivity.class);
+
+                            try {
+                                JSONObject reader = new JSONObject(result);
+                                String token = reader.getString("token");
+                                String userId = reader.getString("id");
+                                i.putExtra("token",token);
+                                i.putExtra("userId",userId);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                         startActivity(i);
+
+                        }else{
+                            Toast.makeText(getApplicationContext(),"Usuário ou Senha Inválidos!",
+                            Toast.LENGTH_LONG).show();
+                        }
+
+
                     }
                 };
 
