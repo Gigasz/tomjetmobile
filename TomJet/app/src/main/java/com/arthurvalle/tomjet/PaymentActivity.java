@@ -73,11 +73,14 @@ public class PaymentActivity extends AppCompatActivity {
                                                   Toast.makeText(getApplicationContext(),"Assento Reservado com Sucesso!",
                                                           Toast.LENGTH_LONG).show();
 
-                                                  Intent itn = new Intent(getApplicationContext(), PassagesActivity.class);
-                                                  itn.putExtra("userId",userId);
-                                                  itn.putExtra("token",token);
+//                                                  Intent itn = new Intent(getApplicationContext(), PassagesActivity.class);
+//                                                  itn.putExtra("userId",userId);
+//                                                  itn.putExtra("token",token);
+//
+//                                                  startActivity(itn);
 
-                                                  startActivity(itn);
+                                                  setResult(11);
+                                                  finish();
 
 
                                               }else{

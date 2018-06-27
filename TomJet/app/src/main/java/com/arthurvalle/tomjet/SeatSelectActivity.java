@@ -68,6 +68,14 @@ public class SeatSelectActivity extends AppCompatActivity {
         setAvailableSeats();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 11) {
+            finish();
+        }
+    }
+
     private void setAvailableSeats() {
         String[] params = {Integer.toString(vooId),token};
 
